@@ -1,0 +1,14 @@
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+int[][]board = new int [3][3];
+int xcounter = 0;
+int ocounter = 0;
+int tcounter = 0;
+
+int main()
+{
+  cout << xcounter << endl;
+}  
