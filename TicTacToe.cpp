@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstring>
+#include <stdlib.h>
+/*10/1/19 Author: Maggie Bao. Description: In the game Tic-Tac-Toe, the program prompts the X player to go first and input X's into a grid by means of declaring the rows and columns. The O player will take their turn next, and the two users go back and forth until either someone wins, or there is a tie. When the round is finished, the program will display the number of wins of each player and the number of ties. After that, it will prompt the user if they want to play again and the other player will make the first move. */
 
 using namespace std;
 
@@ -17,7 +19,7 @@ int turn = X_TURN;
 int xcounter = 0;
 int ocounter = 0;
 int tcounter = 0;
-char str[80];
+char str[5];
 bool stillPlaying = true;
 char response = ' ';
 
@@ -25,19 +27,18 @@ int main()
 {
   while (stillPlaying == true){
     while (checkWin(X_MOVE) == false && checkWin(O_MOVE) == false && checkTie() == false){
-      cout << "Please enter in a letter followed by a number." << endl;
+      cout << "Please enter in a lowercase letter followed by a number (ex. \"a1\", \"c3\")." << endl;
       printBoard();
-      cin.get(str, 80);
+      cin.get(str, 5);
       cin.clear();
       cin.ignore(9999, '\n');
       if (strlen(str) != 2){
-        cout << "Please enter in a letter followed by a number." << endl;
       }
       else if (str[0] != 'a' && str[0] != 'b' && str[0] != 'c'){
         cout << "Row must be letter a, b, or c." << endl;
       }
       else if (str[1] != '1' && str[1] != '2' && str[1] != '3'){
-        cout << "Columns must be numbers 1, 2, or 3." << endl;
+        cout << "Column must be number 1, 2, or 3." << endl;
       }
       else{
         int row = str[0] - 'a';
@@ -80,23 +81,21 @@ int main()
           cout << "Have a nice day!" << endl;
 	  ask = false;
           stillPlaying = false;
-          break;
+          exit(0);
         }
         else if (response == 'y' || response == 'Y'){
   	  ask = false;
 	  for (int row = 0; row < 3; row ++){
 	    for (int column = 0; column < 3; column++) {
 	      board[row][column] = BLANK;
-	      stillPlaying = true;
 	    }
 	  }
-	  break;
         }
         else {
-	  cout << "Input must be either y or n." << endl;
-	  ask = true;
+	  cout << "Input must be either \"y\" or \"n\"." << endl;
         }
       }
+      cin.get();
     }
     return 0;
 }  
