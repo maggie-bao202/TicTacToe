@@ -124,7 +124,7 @@ bool checkWin (int player){ //checks all possible combinations of a win in two d
   if (board[0][0] == player && board[0][1] == player && board[0][2] == player){
     return true;
   }
-  if (board[0][0] == player && board[0][1] == player && board[0][2] == player){
+  if (board[2][0] == player && board[2][1] == player && board[2][2] == player){
     return true;
   }
   if (board[1][0] == player && board[1][1] == player && board[1][2] == player){
