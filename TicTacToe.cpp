@@ -6,30 +6,42 @@
 using namespace std;
 
 //for methods, declare first before initialization
-void printBoard();
-bool checkWin(int);
-bool checkTie();
+void printBoard(int [3][3]);
+bool checkWin(int, int [3][3]);
+bool checkTie(int [3][3]);
 
-int board [3][3];
 const int BLANK = 0;
 const int X_MOVE = 1;
 const int O_MOVE = 2;
 const int X_TURN = 0;
 const int O_TURN = 1;
-int turn = X_TURN;
-int xcounter = 0;
-int ocounter = 0;
-int tcounter = 0;
-char str[5];
-bool stillPlaying = true;
-char response = ' ';
 
 int main()
 {
+  int board [3][3];
+  int turn = X_TURN;
+  int xcounter = 0;
+  int ocounter = 0;
+  int tcounter = 0;
+  char str[5];
+  bool stillPlaying = true;
+  char response = ' ';
+  int firstturn = 0;
+  
+  for(int row = 0; row < 3; row++){//On first turn, print a blank board (debugging)
+    for(int column = 0; column < 3; column++){
+      board[row][column] = BLANK; //set all to blank
+    }
+  }
   while (stillPlaying == true){
-    while (checkWin(X_MOVE) == false && checkWin(O_MOVE) == false && checkTie() == false){
+    while (checkWin(X_MOVE, board) == false && checkWin(O_MOVE, board) == false && checkTie(board) == false){
       cout << "Please enter in a lowercase letter followed by a number (ex. \"a1\", \"c3\")." << endl;
-      printBoard(); //print empty gridboard
+      //if it isnt the first turn, printBoard method
+      if(firstturn != 0){
+	printBoard(board);
+      }
+      firstturn += firstturn;
+      printBoard(board);
       cin.get(str, 5); //put into array of 5. Extra char will be ignored
       cin.clear(); //clear, ignore fixes null bug
       cin.ignore(9999, '\n');
@@ -58,15 +70,15 @@ int main()
 	  cout << "There's a piece there!" << endl;
         }
       }
-      if (checkWin(X_MOVE) == true) { //If X move
+      if (checkWin(X_MOVE, board) == true) { //If X move
         cout << "X wins!" << endl;
         xcounter++; //add 1 to counter
       }
-      else if (checkWin(O_MOVE) == true) { //If O move
+      else if (checkWin(O_MOVE, board) == true) { //If O move
         cout << "O wins!" << endl;
         ocounter++;
       }
-      else if (checkTie() == true) { //tie method below
+      else if (checkTie(board) == true) { //tie method below
 	cout << "It is a tie!" << endl;
 	tcounter++;
       }
@@ -101,7 +113,7 @@ int main()
     return 0;
 }  
 
-void printBoard(){
+void printBoard(int board[3][3]){
   cout <<"\t1\t2\t3 "  << endl; //print header
   for(int row = 0; row < 3; row++){
     cout << (char)('a' + row) << "\t"; //letter and space
@@ -120,7 +132,7 @@ void printBoard(){
   }
 }
   
-bool checkWin (int player){ //checks all possible combinations of a win in two dimentional array
+bool checkWin (int player, int board[3][3]){ //checks all possible combinations of a win in two dimentional array
   if (board[0][0] == player && board[0][1] == player && board[0][2] == player){
     return true;
   }
@@ -149,7 +161,7 @@ bool checkWin (int player){ //checks all possible combinations of a win in two d
 }
 
  
-bool checkTie(){ //if all boxes are filled, return true
+bool checkTie(int board[3][3]){ //if all boxes are filled, return true
   for (int row = 0; row < 3; row++){
     for (int column = 0; column < 3; column++){
       if(board[row][column] == BLANK){
